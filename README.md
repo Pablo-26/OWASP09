@@ -1,10 +1,10 @@
 # Demostración de la Vulnerabilidad de Aleatoriedad Insegura (Insecure Randomness)
 
-## Introducción al OWASP Top 10 para Contratos Inteligentes
+## OWASP Top 10 para Contratos Inteligentes
 
 El OWASP Top 10 para Contratos Inteligentes es una lista de los riesgos de seguridad más críticos en el desarrollo de contratos inteligentes. Sirve como una guía fundamental para desarrolladores y auditores para identificar y mitigar vulnerabilidades comunes que pueden llevar a pérdidas financieras significativas o fallos del sistema en aplicaciones blockchain. Comprender estos riesgos es crucial para construir aplicaciones descentralizadas (dApps) seguras y robustas.
 
-## Comprendiendo la Aleatoriedad Insegura (Insecure Randomness)
+## Insecure Randomness
 
 La Aleatoriedad Insegura (a menudo categorizada como "Aleatoriedad Débil" o "Aleatoriedad Predecible") es una vulnerabilidad crítica en los contratos inteligentes donde la generación de números aleatorios no es verdaderamente impredecible. En entornos blockchain, lograr una verdadera aleatoriedad es un desafío porque todas las transacciones y cambios de estado son públicamente visibles y deterministas.
 
@@ -86,44 +86,72 @@ Este proyecto está diseñado para ser fácilmente probado y demostrado en Remix
     *   Haz clic en el icono "Create New File".
     *   Crea un nuevo archivo llamado `InsecureRandom.sol` y pega el contenido de `contracts/InsecureRandom.sol` en él.
     *   Crea otro nuevo archivo llamado `InsecureRandomAttacker.sol` y pega el contenido de `contracts/InsecureRandomAttacker.sol` en él.
+
+        <img width="324" height="304" alt="image" src="https://github.com/user-attachments/assets/1aa4dd18-90e6-4006-83ea-47bb42821c58" />
+
 3.  **Compilar Contratos**:
     *   Navega a la pestaña "Solidity Compiler" (normalmente el segundo icono en la barra lateral izquierda).
     *   Asegúrate de que la versión del compilador esté configurada en `0.8.18` (o una versión compatible como `0.8.x`).
     *   Haz clic en el botón "Compile InsecureRandom.sol".
+
+         <img width="234" height="548" alt="image" src="https://github.com/user-attachments/assets/a5c35755-5d8f-4bc3-94dd-b96101b971aa" />
+
     *   Haz clic en el botón "Compile InsecureRandomAttacker.sol".
     *   Verifica que ambos contratos se compilen sin errores ni advertencias.
-4.  **Desplegar `InsecureRandom.sol` (La Víctima)**:
+
+
+          <img width="601" height="150" alt="image" src="https://github.com/user-attachments/assets/99f5334b-2061-4223-b8ae-739268c39a18" />
+
+3.  **Desplegar `InsecureRandom.sol` (La Víctima)**:
     *   Navega a la pestaña "Deploy & Run Transactions" (normalmente el tercer icono en la barra lateral izquierda).
     *   En el menú desplegable "ENVIRONMENT", selecciona "JavaScript VM London" (o cualquier entorno de prueba adecuado como "Remix VM (London)").
     *   En el menú desplegable "CONTRACT", selecciona `InsecureRandom`.
     *   Haz clic en el botón naranja "Deploy".
     *   Una vez desplegado, expande el contrato `InsecureRandom` bajo "Deployed Contracts".
     *   **Copia la dirección del contrato `InsecureRandom` desplegado.** Necesitarás esta dirección para el contrato atacante.
-5.  **Fondear `InsecureRandom.sol` (Opcional pero Recomendado)**:
+
+         <img width="221" height="567" alt="image" src="https://github.com/user-attachments/assets/4dbecba4-53e4-40c7-b490-406051a047d8" />
+
+4.  **Fondear `InsecureRandom.sol` (Opcional pero Recomendado)**:
     *   Para que el juego sea realista y el contrato víctima pueda pagar las ganancias, envíale algo de Ether.
     *   En el menú desplegable "Account" en la parte superior de la pestaña "Deploy & Run Transactions", selecciona una cuenta con algo de Ether (las cuentas de Remix VM vienen pre-fondeadas).
     *   En el campo "Value", ingresa `1` y selecciona `Ether` del menú desplegable.
     *   Desplázate hacia abajo hasta el contrato `InsecureRandom` desplegado, y en la sección "Transact", puedes llamar a una función pagadera (como `play` con 0.01 Ether) o simplemente enviar Ether directamente a su dirección. Dado que `InsecureRandom.sol` tiene una función `receive()`, puedes enviar Ether directamente.
     *   Haz clic en el botón "Transact" junto al campo `Value` para enviar 1 Ether al contrato `InsecureRandom`.
-6.  **Desplegar `InsecureRandomAttacker.sol` (El Atacante)**:
+5.  **Desplegar `InsecureRandomAttacker.sol` (El Atacante)**:
     *   En el menú desplegable "CONTRACT", selecciona `InsecureRandomAttacker`.
     *   Junto al botón "Deploy", verás un campo de entrada etiquetado `_target` (address). Pega la dirección copiada del contrato `InsecureRandom` desplegado en este campo.
     *   Haz clic en el botón naranja "Deploy".
     *   Una vez desplegado, expande el contrato `InsecureRandomAttacker` bajo "Deployed Contracts".
     *   **Copia la dirección del contrato `InsecureRandomAttacker` desplegado.**
-7.  **Fondear `InsecureRandomAttacker.sol`**:
+
+         <img width="243" height="174" alt="image" src="https://github.com/user-attachments/assets/a789db6d-2a51-4794-a591-ee48bc98e9ed" />
+
+6.  **Fondear `InsecureRandomAttacker.sol`**:
     *   El contrato atacante necesita Ether para pagar la tarifa de entrada de 0.01 ETH cuando llama a `play()` en el contrato víctima.
     *   En el menú desplegable "Account", selecciona una cuenta *diferente* a la utilizada para el propietario de `InsecureRandom` (para simular un atacante separado).
     *   En el campo "Value", ingresa `0.1` y selecciona `Ether` del menú desplegable.
     *   Envía este Ether a la dirección del contrato `InsecureRandomAttacker` desplegado. Puedes hacerlo pegando la dirección del contrato atacante en el campo "To" (si está disponible) o interactuando con una función pagadera en el contrato atacante (tiene una función `receive()`).
     *   Haz clic en el botón "Transact" junto al campo `Value` para enviar 0.1 Ether al contrato `InsecureRandomAttacker`.
-8.  **Ejecutar el Ataque**:
+
+        <img width="246" height="170" alt="image" src="https://github.com/user-attachments/assets/faddd095-368d-4a58-8749-c7970025494f" />
+   
+7.  **Ejecutar el Ataque**:
     *   Bajo el contrato `InsecureRandomAttacker` desplegado, localiza el botón `attack`.
     *   Haz clic en el botón `attack` varias veces (por ejemplo, 5-10 veces).
+
+         <img width="244" height="181" alt="image" src="https://github.com/user-attachments/assets/08ffa9ae-5bba-4feb-85db-908a597a8bad" />
+
     *   **Observa los registros de transacciones en la consola de Remix (en la parte inferior).**
         *   Verás eventos `Predicted` emitidos por el contrato atacante, mostrando el número aleatorio predicho, el número de bloque y la marca de tiempo.
         *   Crucialmente, *solo* verás eventos `Played` emitidos por el contrato `InsecureRandom` (víctima) cuando la predicción del atacante fue un número par (una condición de victoria).
     *   Después de varios ataques, verifica el saldo del contrato `InsecureRandomAttacker` y del contrato `InsecureRandom` utilizando sus respectivas funciones `getBalance()`. Deberías observar que el saldo del contrato atacante aumenta (y el de la víctima disminuye) con el tiempo, demostrando la explotación exitosa.
-9.  **Retirar las Ganancias del Atacante**:
+
+        <img width="648" height="130" alt="image" src="https://github.com/user-attachments/assets/888e489d-1382-4bc5-b162-262c3e62a46f" />
+   
+7.  **Retirar las Ganancias del Atacante**:
     *   Bajo el contrato `InsecureRandomAttacker` desplegado, haz clic en el botón `withdraw`. Esto transferirá todo el Ether acumulado del contrato atacante a la EOA del atacante (la cuenta que desplegó el contrato atacante).
     *   Verifica el saldo de la EOA del atacante para confirmar las ganancias.
+
+         <img width="239" height="130" alt="image" src="https://github.com/user-attachments/assets/95dbc97a-a1a3-4f1d-bd3b-397e839f96ad" />
+
