@@ -81,7 +81,10 @@ Este contrato está diseñado para explotar el contrato `InsecureRandom` predici
 Este proyecto está diseñado para ser fácilmente probado y demostrado en Remix IDE.
 
 1.  **Abrir Remix IDE**: Ve a [https://remix.ethereum.org/](https://remix.ethereum.org/).
-2.  **Crear Nuevos Archivos**:
+
+      <img width="1915" height="962" alt="image" src="https://github.com/user-attachments/assets/7b2db86c-5e50-481a-be43-f101c13f0d2e" />
+
+3.  **Crear Nuevos Archivos**:
     *   Navega a la pestaña "File Explorers" (normalmente el primer icono en la barra lateral izquierda).
     *   Haz clic en el icono "Create New File".
     *   Crea un nuevo archivo llamado `InsecureRandom.sol` y pega el contenido de `contracts/InsecureRandom.sol` en él.
@@ -89,7 +92,7 @@ Este proyecto está diseñado para ser fácilmente probado y demostrado en Remix
 
         <img width="324" height="304" alt="image" src="https://github.com/user-attachments/assets/1aa4dd18-90e6-4006-83ea-47bb42821c58" />
 
-3.  **Compilar Contratos**:
+4.  **Compilar Contratos**:
     *   Navega a la pestaña "Solidity Compiler" (normalmente el segundo icono en la barra lateral izquierda).
     *   Asegúrate de que la versión del compilador esté configurada en `0.8.18` (o una versión compatible como `0.8.x`).
     *   Haz clic en el botón "Compile InsecureRandom.sol".
